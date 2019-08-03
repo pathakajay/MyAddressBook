@@ -18,37 +18,37 @@ namespace MyAddressBook.Data
             db = new SqlConnection(connectionstring);
         }
         
-        public int AddContact(Contact contact)
+        public int AddContact(Contacts Contacts)
         {
-            var sql = "INSERT INTO dbo.[Contact] ([Name] ,[Email] ,[Phone] ,[Address] ,[PictureName]) VALUES" +
+            var sql = "INSERT INTO dbo.[Contacts] ([Name] ,[Email] ,[Phone] ,[Address] ,[PictureName]) VALUES" +
                 "(@Name, @Email, @Phone, @Address, @Picturename); " +
                 "SELECT CAST(SCOPE_IDENTITY() AS INT)";
-            var id = this.db.Query<int>(sql, contact).Single();
-            contact.Id = id;
+            var id = this.db.Query<int>(sql, Contacts).Single();
+            Contacts.Id = id;
             return id;
         }
 
         public bool DeleteContact(int id)
         {
-            var sql = "DELETE FROM dbo.[Contact] WHERE id = @id";
+            var sql = "DELETE FROM dbo.[Contacts] WHERE id = @id";
             var result = db.Execute(sql, new { Id = id });
 
             return true;
         }
 
-        public Contact GetContact(int id)
+        public Contacts GetContact(int id)
         {
-            var sql = "SELECT * FROM dbo.[Contact] WHERE id = @id";
-            var result = db.Query<Contact>(sql, new { Id = id })
+            var sql = "SELECT * FROM dbo.[Contacts] WHERE id = @id";
+            var result = db.Query<Contacts>(sql, new { Id = id })
                 .SingleOrDefault();
 
             return result;
         }
 
-        public List<Contact> GetContacts()
+        public List<Contacts> GetContacts()
         {
-            var sql = "SELECT * FROM dbo.[Contact] order by id";
-            var result = db.Query<Contact>(sql).ToList();
+            var sql = "SELECT * FROM dbo.[Contacts] order by id";
+            var result = db.Query<Contacts>(sql).ToList();
 
             return result;
         }

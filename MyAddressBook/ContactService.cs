@@ -24,7 +24,7 @@ namespace MyAddressBook
         /// Gets all contacts from database
         /// </summary>
         /// <returns></returns>
-        public List<Contact> GetContacts()
+        public List<Contacts> GetContacts()
         {
             var contactRepository = new ContactRepository();
             var contacts = contactRepository.GetContacts();
@@ -36,7 +36,7 @@ namespace MyAddressBook
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Contact GetContact(int id)
+        public Contacts GetContact(int id)
         {
             var contactRepository = new ContactRepository();
             var contact = contactRepository.GetContact(id);
@@ -49,12 +49,12 @@ namespace MyAddressBook
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Contact GetContactFromCache(int id)
+        public Contacts GetContactFromCache(int id)
         {
             var cacheContent = cache.StringGet(id.ToString());
             if (!cacheContent.IsNull)
             {
-                var contact = JsonConvert.DeserializeObject<Contact>(cacheContent);
+                var contact = JsonConvert.DeserializeObject<Contacts>(cacheContent);
                 return contact;
             }
 
@@ -66,7 +66,7 @@ namespace MyAddressBook
         /// </summary>
         /// <param name="contact"></param>
         /// <returns></returns>
-        public int AddContact(Contact contact)
+        public int AddContact(Contacts contact)
         {
             var contactRepository = new ContactRepository();
             contactRepository.AddContact(contact);

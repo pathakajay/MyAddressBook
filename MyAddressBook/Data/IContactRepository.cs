@@ -5,12 +5,12 @@ namespace MyAddressBook.Data
 {
     public interface IContactRepository
     {
-        Contact GetContact(int id);
+        Contacts GetContact(int id);
 
-        int AddContact(Contact contact);
+        int AddContact(Contacts contact);
 
         bool DeleteContact(int id);
 
-        List<Contact> GetContacts();
+        List<Contacts> GetContacts();
     }
 }

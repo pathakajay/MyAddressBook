@@ -28,7 +28,7 @@ namespace MyAddressBook.Controllers
 
             var contacts = contactService.GetContacts();
 
-            var viewModel = contacts.Select(c => new Contact()
+            var viewModel = contacts.Select(c => new Contacts()
             {
                 Id = c.Id,
                 Name = c.Name,
@@ -56,7 +56,7 @@ namespace MyAddressBook.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Add(Contact model)
+        public ActionResult Add(Contacts model)
         {
             var contactService = new ContactService();
 
@@ -69,15 +69,20 @@ namespace MyAddressBook.Controllers
                 if (file != null && file.ContentLength > 0)
                 {
                     var fileName = Path.GetFileName(file.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Images/"), fileName);
+                    var imagesPath = Server.MapPath("~/Images/");
+                    if (Directory.Exists(imagesPath)==false)
+                    {
+                        Directory.CreateDirectory(imagesPath);
+                    }
+                    var path = Path.Combine(imagesPath, fileName);
                     file.SaveAs(path);
 
                     var blobService = new BlobService();
-                    pictureFilename = blobService.UploadPictureToBlob(Server.MapPath("~/Images/"), fileName);
+                    pictureFilename = blobService.UploadPictureToBlob(imagesPath, fileName);
                 }
             }
 
-            var id = contactService.AddContact(new Contact()
+            var id = contactService.AddContact(new Contacts()
             {
                 Name = model.Name,
                 Address = model.Address,
@@ -101,7 +106,7 @@ namespace MyAddressBook.Controllers
 
             var photoContainerUrl = ConfigurationManager.AppSettings["photoContainerUrl"];
 
-            return View(new Contact()
+            return View(new Contacts()
             {
                 Id = contact.Id,
                 Name = contact.Name,
@@ -125,7 +130,7 @@ namespace MyAddressBook.Controllers
             // in case the key does not exist in the cache; returning a fall-back model
             if(contact == null)
             {
-                return View(new Contact()
+                return View(new Contacts()
                 {
                     Id = -1,
                     Name = "Cache is not available",
@@ -138,7 +143,7 @@ namespace MyAddressBook.Controllers
 
             var photoContainerUrl = ConfigurationManager.AppSettings["photoContainerUrl"];
 
-            return View(new Contact()
+            return View(new Contacts()
             {
                 Id = contact.Id,
                 Name = contact.Name,

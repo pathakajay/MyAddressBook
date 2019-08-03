@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MyAddressBook.Models
 {
-    public class Contact
+    public class Contacts
     {
         public int Id { get; set; }
         public string Name { get; set; }
