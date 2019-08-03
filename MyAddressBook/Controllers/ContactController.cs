@@ -79,6 +79,7 @@ namespace MyAddressBook.Controllers
 
                     var blobService = new BlobService();
                     pictureFilename = blobService.UploadPictureToBlob(imagesPath, fileName);
+                    System.IO.File.Delete(path);
                 }
             }
 
